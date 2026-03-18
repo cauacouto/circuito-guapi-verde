@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoTrilhas — Sem Conexão</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --verde-escuro: #1a3a2a;
+      --verde: #2d6a4f;
+      --verde-claro: #74c69d;
+      --verde-bg: #d8f3dc;
+      --creme: #f8f4ef;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--verde-escuro);
+      color: white;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .icon {
+      font-size: 72px;
+      margin-bottom: 24px;
+      animation: sway 3s ease-in-out infinite;
+    }
+    @keyframes sway {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-bottom: 12px;
+      color: var(--verde-claro);
+    }
+    p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+      max-width: 320px;
+      margin: 0 auto 32px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--verde-claro);
+      color: var(--verde-escuro);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 100px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+    .btn:hover { transform: scale(1.05); }
+    .dica {
+      margin-top: 40px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+    }
+    .dica span { display: block; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <div class="icon">🌿</div>
+  <h1>Você está offline</h1>
+  <p>Parece que a floresta está bloqueando o sinal. Verifique sua conexão e tente novamente.</p>
+  <button class="btn" onclick="tentarNovamente()">Tentar novamente</button>
+  <div class="dica">
+    <span>Os dados que você acessou anteriormente</span>
+    <span>podem estar disponíveis no cache.</span>
+  </div>
+
+  <script>
+    function tentarNovamente() {
+      window.location.href = '/';
+    }
+
+    // Se voltar a ter conexão, redireciona automaticamente
+    window.addEventListener('online', () => {
+      window.location.href = '/';
+    });
+  </script>
+</body>
+</html>

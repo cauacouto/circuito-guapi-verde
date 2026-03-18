@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>EcoTrilhas Guapimirim</title>
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#2d6a4f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="EcoTrilhas" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+
+  <!-- SEO -->
+  <meta name="description" content="Descubra trilhas, cachoeiras e mirantes em Guapimirim - RJ. Turismo ecológico sustentável." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/main.css" />
+</head>
+<body>
+
+  <!-- HEADER / NAV -->
+  <header class="app-header" id="header">
+    <div class="header-inner">
+      <a class="logo" href="#" onclick="navegarPara('inicio')">
+        <span class="logo-icon">🌿</span>
+        <span class="logo-text">circuito guapi verde</span>
+      </a>
+      <nav class="nav-desktop">
+        <a class="nav-link" onclick="navegarPara('inicio')">Início</a>
+        <a class="nav-link" onclick="navegarPara('pontos')">Destinos</a>
+        <a class="nav-link" onclick="navegarPara('avaliacoes')">Avaliações</a>
+        <a class="nav-link" onclick="navegarPara('admin')">Gerenciar</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="nav-mobile" id="navMobile">
+      <a onclick="navegarPara('inicio'); fecharMenu()">🏠 Início</a>
+      <a onclick="navegarPara('pontos'); fecharMenu()">🗺️ Destinos</a>
+      <a onclick="navegarPara('avaliacoes'); fecharMenu()">⭐ Avaliações</a>
+      <a onclick="navegarPara('admin'); fecharMenu()">⚙️ Gerenciar</a>
+    </nav>
+  </header>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="fecharModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="fecharModal()">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- APP CONTAINER -->
+  <main class="app-main" id="appMain">
+
+    <!-- ===== PÁGINA: INÍCIO ===== -->
+    <section class="page active" id="page-inicio">
+      <div class="hero">
+        <div class="hero-bg">
+          <div class="hero-gradient"></div>
+          <div class="hero-circles">
+            <div class="circle c1"></div>
+            <div class="circle c2"></div>
+            <div class="circle c3"></div>
+          </div>
+        </div>
+        <div class="hero-content">
+          <p class="hero-eyebrow">Guapimirim · Rio de Janeiro</p>
+          <h1 class="hero-title">Descubra a <em>natureza</em> que te espera</h1>
+          <p class="hero-subtitle">Trilhas, cachoeiras, mirantes e campings em um dos tesouros ecológicos do Rio de Janeiro.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" onclick="navegarPara('pontos')">Explorar Destinos</button>
+            <button class="btn btn-ghost" onclick="abrirModalAvaliacao()">Deixar Avaliação</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-strip" id="statsStrip">
+        <div class="stat"><span class="stat-num" id="statPontos">—</span><span class="stat-label">Destinos</span></div>
+        <div class="stat"><span class="stat-num" id="statAvaliacoes">—</span><span class="stat-label">Avaliações</span></div>
+        <div class="stat"><span class="stat-num" id="statUsuarios">—</span><span class="stat-label">Exploradores</span></div>
+      </div>
+
+      <!-- Categorias -->
+      <div class="section">
+        <h2 class="section-title">Explorar por Tipo</h2>
+        <div class="categorias-grid">
+          <button class="categoria-card" onclick="filtrarPorTipo('trilha')">
+            <span class="cat-icon">🥾</span>
+            <span class="cat-label">Trilhas</span>
+          </button>
+          <button class="categoria-card" onclick="filtrarPorTipo('cachoeira')">
+            <span class="cat-icon">💧</span>
+            <span class="cat-label">Cachoeiras</span>
+          </button>
+          <button class="categoria-card" onclick="filtrarPorTipo('mirante')">
+            <span class="cat-icon">⛰️</span>
+            <span class="cat-label">Mirantes</span>
+          </button>
+          <button class="categoria-card" onclick="filtrarPorTipo('camping')">
+            <span class="cat-icon">⛺</span>
+            <span class="cat-label">Campings</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Destaques -->
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">Destaques</h2>
+          <button class="btn-link" onclick="navegarPara('pontos')">Ver todos →</button>
+        </div>
+        <div class="cards-scroll" id="destaquesHome"></div>
+      </div>
+    </section>
+
+    <!-- ===== PÁGINA: PONTOS ===== -->
+    <section class="page" id="page-pontos">
+      <div class="page-header">
+        <h2 class="page-title">Destinos Naturais</h2>
+        <p class="page-sub">Todos os atrativos de Guapimirim</p>
+      </div>
+
+      <!-- Filtros -->
+      <div class="filtros">
+        <div class="busca-wrap">
+          <span class="busca-icon">🔍</span>
+          <input type="text" class="busca-input" id="buscaInput" placeholder="Buscar destino..." oninput="debounce(carregarPontos, 400)()" />
+        </div>
+        <div class="filtros-chips">
+          <button class="chip active" data-tipo="" onclick="selecionarTipo(this, '')">Todos</button>
+          <button class="chip" data-tipo="trilha" onclick="selecionarTipo(this, 'trilha')">🥾 Trilhas</button>
+          <button class="chip" data-tipo="cachoeira" onclick="selecionarTipo(this, 'cachoeira')">💧 Cachoeiras</button>
+          <button class="chip" data-tipo="mirante" onclick="selecionarTipo(this, 'mirante')">⛰️ Mirantes</button>
+          <button class="chip" data-tipo="camping" onclick="selecionarTipo(this, 'camping')">⛺ Campings</button>
+        </div>
+        <div class="filtros-extra">
+          <select class="select-filter" id="filtroDificuldade" onchange="carregarPontos()">
+            <option value="">Qualquer dificuldade</option>
+            <option value="facil">😊 Fácil</option>
+            <option value="moderado">😤 Moderado</option>
+            <option value="dificil">💪 Difícil</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="cards-grid" id="listaPontos">
+        <div class="loading">Carregando destinos...</div>
+      </div>
+
+      <button class="fab" onclick="abrirModalNovoPonto()" title="Novo Ponto">＋</button>
+    </section>
+
+    <!-- ===== PÁGINA: AVALIAÇÕES ===== -->
+    <section class="page" id="page-avaliacoes">
+      <div class="page-header">
+        <h2 class="page-title">Avaliações</h2>
+        <p class="page-sub">O que os exploradores estão dizendo</p>
+      </div>
+      <button class="btn btn-primary mb-section" onclick="abrirModalAvaliacao()">+ Nova Avaliação</button>
+      <div id="listaAvaliacoes">
+        <div class="loading">Carregando avaliações...</div>
+      </div>
+    </section>
+
+    <!-- ===== PÁGINA: ADMIN ===== -->
+    <section class="page" id="page-admin">
+      <div class="page-header">
+        <h2 class="page-title">Gerenciamento</h2>
+        <p class="page-sub">Administre destinos e usuários</p>
+      </div>
+
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="adminTab(this, 'admin-pontos')">🗺️ Pontos</button>
+        <button class="admin-tab" onclick="adminTab(this, 'admin-usuarios')">👥 Usuários</button>
+      </div>
+
+      <div class="admin-panel active" id="admin-pontos">
+        <div class="admin-toolbar">
+          <h3 class="admin-subtitle">Pontos Turísticos</h3>
+          <button class="btn btn-primary btn-sm" onclick="abrirModalNovoPonto()">+ Novo</button>
+        </div>
+        <div id="adminListaPontos"><div class="loading">Carregando...</div></div>
+      </div>
+
+      <div class="admin-panel" id="admin-usuarios">
+        <div class="admin-toolbar">
+          <h3 class="admin-subtitle">Usuários</h3>
+          <button class="btn btn-primary btn-sm" onclick="abrirModalNovoUsuario()">+ Novo</button>
+        </div>
+        <div id="adminListaUsuarios"><div class="loading">Carregando...</div></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM NAV (mobile) -->
+  <nav class="bottom-nav">
+    <button class="bnav-btn active" data-page="inicio" onclick="navegarPara('inicio')">
+      <span class="bnav-icon">🏠</span><span class="bnav-label">Início</span>
+    </button>
+    <button class="bnav-btn" data-page="pontos" onclick="navegarPara('pontos')">
+      <span class="bnav-icon">🗺️</span><span class="bnav-label">Destinos</span>
+    </button>
+    <button class="bnav-btn" data-page="avaliacoes" onclick="navegarPara('avaliacoes')">
+      <span class="bnav-icon">⭐</span><span class="bnav-label">Reviews</span>
+    </button>
+    <button class="bnav-btn" data-page="admin" onclick="navegarPara('admin')">
+      <span class="bnav-icon">⚙️</span><span class="bnav-label">Admin</span>
+    </button>
+  </nav>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/pwa.js"></script>
+</body>
+</html>
