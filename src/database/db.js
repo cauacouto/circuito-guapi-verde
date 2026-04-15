@@ -118,12 +118,12 @@ function seedData() {
   }
 
   const avs = [
-    [2,1,5,'Visual incrível do Dedo de Deus. Vale muito a parada no mirante!'],
-    [3,1,4,'Vista linda e acesso fácil pela rodovia. Ótimo para fotos.'],
-    [2,2,5,'Poço Verde é lindo demais, água gelada e lugar super preservado.'],
-    [3,3,5,'A sede do parque é bem organizada e ótima para passeios em família.'],
-    [2,4,4,'Trilha curta e agradável, perfeita para quem quer contato rápido com a natureza.'],
-    [3,5,5,'A capela é um lugar lindo e histórico, ótima parada para conhecer a cultura local.'],
+    [2,1,5,'Trilha incrível! A vista lá de cima compensa cada subida. Recomendo muito!'],
+    [3,1,4,'Muito bonito, mas exige preparo físico. Levem bastante água.'],
+    [2,2,5,'A cachoeira é simplesmente perfeita. Água cristalina e lugar tranquilo.'],
+    [3,3,5,'O pôr do sol no mirante é algo que não tem preço. Experiência única!'],
+    [2,4,4,'Ótimo camping, estrutura básica mas o ambiente compensa. Rio lindo!'],
+    [3,5,5,'Trilha das Bromélias é perfeita para conhecer a flora local.'],
   ];
   for (const a of avs) {
     db.run('INSERT INTO avaliacoes (usuario_id,ponto_id,nota,comentario) VALUES (?,?,?,?)', a);
